@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Day1_GameManager : MonoBehaviour
 {
@@ -16,13 +17,7 @@ public class Day1_GameManager : MonoBehaviour
     private int currentWaypointIndex = 0;
     private bool StartMoving = false;
     [SerializeField] float RotationDuration;
-    private enum GameState{
-        Game_1,
-        Game_1_End,
-        Game_2,
-        Game_2_End,
-    }
-    private GameState State = GameState.Game_1;
+    
     
     void Start()
     {
@@ -30,18 +25,15 @@ public class Day1_GameManager : MonoBehaviour
         fadeScreen.FadeIn();
         narrationManager = GetComponent<NarrationManager>();
         player_agent.updateRotation = false;
+        if(plant_Progress != null)
+            plant_Progress.OnGameOver += HandleOnGameOver;
         
         
         
     }
     void Update()
     {
-        Debug.Log(State);
-        if(plant_Progress.GameOver && State == GameState.Game_1){
-            State = GameState.Game_1_End;
-            StartCoroutine(When_The_Game1_End());
-            
-        }
+        
 
         //=======================
 
@@ -50,6 +42,11 @@ public class Day1_GameManager : MonoBehaviour
             MoveToDestination();
         }
         //=======================
+    }
+    private void HandleOnGameOver(object sender, EventArgs e){
+
+        StartCoroutine(When_The_Game1_End());
+        plant_Progress.OnGameOver -= HandleOnGameOver;
     }
     
     IEnumerator When_The_Game1_End(){

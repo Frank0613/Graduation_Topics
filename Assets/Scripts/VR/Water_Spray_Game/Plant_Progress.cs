@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Plant_Progress : MonoBehaviour
 {
@@ -20,11 +21,12 @@ public class Plant_Progress : MonoBehaviour
     private int Current_Dot_index = 0;
     public bool In_Range {get; private set;} = false;
 
-    public bool GameOver {get; private set;} = false;
+    
+    public event EventHandler OnGameOver;
     
     void Start()
     {
-        GameOver = false;
+        
         Total_PosX = progressBar.GetComponent<RectTransform>().rect.width; // Initialize the Total_PosX.
         Change_Level(); // Initialize level.
 
@@ -64,7 +66,7 @@ public class Plant_Progress : MonoBehaviour
 
         // Limited position where able to spawn
         Vector2 AnchoredPosition = Fill_Area.anchoredPosition;
-        AnchoredPosition.x = Random.Range(0, Max_Spawn_PosX(fill_size));
+        AnchoredPosition.x = UnityEngine.Random.Range(0, Max_Spawn_PosX(fill_size));
         float Start_PosX = AnchoredPosition.x;
         float End_PosX = Start_PosX + fill_size;
         Fill_Area.anchoredPosition = AnchoredPosition;
@@ -105,8 +107,8 @@ public class Plant_Progress : MonoBehaviour
             this.enabled = false;
 
             // Spray Finish...
-            GameOver = true;
-            Debug.Log("Finish!!");
+            OnGameOver?.Invoke(this, EventArgs.Empty);
+            
             
         }
     }
