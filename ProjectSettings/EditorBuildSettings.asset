@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MR/Title.unity
     guid: 417483da39a5e1948a6392d068589ea3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR/MainScene.unity
     guid: 19706251497985345afd570f1915cfd9
+  - enabled: 1
+    path: Assets/Scenes/FrankTest/FrankTest_2.unity
+    guid: 369a62b0a79dc61419d476bfe2276e01
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 203095a25e396084b97ab362fa57674b,
       type: 2}
