@@ -29,7 +29,7 @@ public class Player_Movement : MonoBehaviour
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-
+        playerRigidbody.isKinematic = true;
         //When start, previous position equal to init position of both hands.
         previousLeftHandPos = leftHand.transform.position;
         previousRightHandPos = rightHand.transform.position;
@@ -38,7 +38,7 @@ public class Player_Movement : MonoBehaviour
     void FixedUpdate()
     {
         TestModeFunction();
-        Player_Movement_Fun();
+        // Player_Movement_Fun();
     }
     void Player_Movement_Fun()
     {
@@ -50,6 +50,7 @@ public class Player_Movement : MonoBehaviour
             if (smoothedLeftHandVelocity.z < -velocityThreshold && smoothedRightHandVelocity.z < -velocityThreshold)
             {
                 ApplyForwardForce();
+                Debug.Log("Move");
             }
         }
     }
@@ -69,15 +70,22 @@ public class Player_Movement : MonoBehaviour
     }
     public void ApplyForwardForce()
     {
+
+
+        //Apply the force
+        //playerRigidbody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
+
+
+
+        // Normalized direction.
+        Vector3 averageDirection = (smoothedLeftHandVelocity + smoothedRightHandVelocity).normalized;
+        //Force direction.(expect y dir)
+        Vector3 forceDirection = -new Vector3(averageDirection.x, 0, averageDirection.z);
+
         if (Time.time - lastForceTime >= cooldownDuration)
         {
-            // Normalized direction.
-            Vector3 averageDirection = (smoothedLeftHandVelocity + smoothedRightHandVelocity).normalized;
-            //Force direction.(expect y dir)
-            Vector3 forceDirection = -new Vector3(averageDirection.x, 0, averageDirection.z);
             //Apply the force
-            playerRigidbody.AddForce(forceDirection * forwardForce, ForceMode.Impulse);
-            //Update lastForce time  
+            playerRigidbody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
             lastForceTime = Time.time;
         }
     }
@@ -110,6 +118,7 @@ public class Player_Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && TestMode)
         {
+            Debug.Log("ApplyForce");
             ApplyForwardForce();
         }
     }

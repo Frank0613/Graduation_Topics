@@ -13,6 +13,7 @@ public class Fist_Detector : MonoBehaviour
     {
         if (other.tag == "Rock" && Target_Player.Both_Hands_Fist())
         {
+
             Debug.Log("Move");
             Target_Player.ApplyForwardForce();
         }
