@@ -45,9 +45,9 @@ public class MatchGameManager : MonoBehaviour
         initialWidth = Fill_Area.sizeDelta.x;
         Vague_Photo.SetActive(true);
 
-        // Hide UI when start
-        Display_MatchGame_Tutorial(false);
-        Display_MatchGame_UI(false);
+        // Hide UI when start   
+        //Display_MatchGame_Tutorial(false);
+        //Display_MatchGame_UI(false);
     }
     void Update()
     {
@@ -201,7 +201,6 @@ public class MatchGameManager : MonoBehaviour
             }
             yield return null;
         }
-
     }
     private void Stop_GameInProgress_Coroutine()
     {
@@ -227,17 +226,15 @@ public class MatchGameManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Y))
             {
-
                 ChangeGameStatus("MatchGameStart");
                 GetComponent<NarrationManager>().Narration_When_MatchGame();
-
             }
         }
 
 
-        Debug.Log(state);
+        //Debug.Log(state);
     }
     #endregion
 

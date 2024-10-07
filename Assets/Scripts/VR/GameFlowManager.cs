@@ -23,7 +23,10 @@ public class GameFlowManager : MonoBehaviour
     [SerializeField] GameObject Daughter_OBJ;
     [SerializeField] GameObject Door_OBJ;
 
+    public GameObject Player;
+
     private Coroutine moveCoroutine;
+    private Coroutine RotationCoroutine;
 
     // Event
     public EventHandler OnStart_PhotoRoute;
@@ -93,15 +96,22 @@ public class GameFlowManager : MonoBehaviour
     #region AfterSprayGames
     public void After_SprayGame()
     {
-        StartCoroutine(Route_After_SprayGame(180));
+        StartCoroutine(Route_After_SprayGame());
+
     }
 
-    IEnumerator Route_After_SprayGame(float RotationY)
+    IEnumerator Route_After_SprayGame()
     {
         // Hide_SprayBottle_UI
         yield return new WaitForSeconds(1f);
         GetComponent<SprayGameManager>().Display_SprayBottle_UI(false);
         yield return new WaitForSeconds(1f);
+        Player.GetComponent<Rigidbody>().isKinematic = false;
+        if (RotationCoroutine == null)
+        {
+            RotationCoroutine = StartCoroutine(SmoothRotatePlayer(182f));
+            GetComponent<SprayGameManager>().Display_SprayBottle_UI(true);
+        }
 
         // Start moving & narration
         OnStart_PhotoRoute?.Invoke(this, EventArgs.Empty);
@@ -117,7 +127,7 @@ public class GameFlowManager : MonoBehaviour
     #region AfterMatchGames
     public void After_MatchGame()
     {
-        StartCoroutine(Route_After_MatchGame(-150));
+        StartCoroutine(SmoothRotatePlayer(90));
     }
     IEnumerator Route_After_MatchGame(float RotationY)
     {
@@ -151,10 +161,10 @@ public class GameFlowManager : MonoBehaviour
             Vector3 directionToNextWaypoint = waypoints[index].position - player_agent.transform.position;
 
             // Calculate the target rotation based on the direction * offset
-            Quaternion targetRotation = Quaternion.LookRotation(directionToNextWaypoint) * Quaternion.Euler(0, 180, 0); ;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToNextWaypoint) * Quaternion.Euler(0, 180, 0);
 
             // Smoothly rotate the player to face the next waypoint
-            yield return StartCoroutine(SmoothRotatePlayer(targetRotation));
+            //yield return StartCoroutine(SmoothRotatePlayer(targetRotation));
 
             // Set the destination to the next waypoint
             player_agent.SetDestination(waypoints[index].position);
@@ -173,18 +183,19 @@ public class GameFlowManager : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    IEnumerator SmoothRotatePlayer(Quaternion targetRotation)
+    IEnumerator SmoothRotatePlayer(float targetRotationY)
     {
         Quaternion startRotation = player_agent.transform.rotation;
         float elapsedTime = 0f;
 
         while (elapsedTime < RotationDuration)
         {
-            player_agent.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / RotationDuration);
+            player_agent.transform.rotation = Quaternion.Slerp(startRotation, Quaternion.Euler(0, targetRotationY, 0), elapsedTime / RotationDuration);
             elapsedTime += Time.deltaTime;
             yield return null; // Continue the rotation over multiple frames
         }
-        player_agent.transform.rotation = targetRotation;
+        player_agent.transform.rotation = Quaternion.Euler(0, targetRotationY, 0);
+        RotationCoroutine = null;
     }
     #endregion
 

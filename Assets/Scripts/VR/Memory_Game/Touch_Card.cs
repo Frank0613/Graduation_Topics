@@ -5,7 +5,7 @@ using UnityEngine;
 public class Touch_Card : MonoBehaviour
 {
     public string card_Tag;
-    public bool isRotating { get;private set;}
+    public bool isRotating { get; private set; }
 
     public void Rotate(float angle, float duration)
     {

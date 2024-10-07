@@ -17,6 +17,8 @@ public class NarrationManager : MonoBehaviour
     private AudioSource audioSource;
     private Coroutine currentNarrationCoroutine; // Reference to the current narration coroutine
 
+
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -32,6 +34,7 @@ public class NarrationManager : MonoBehaviour
     public void Narration_After_SprayGame()
     {
         PlayNarration(1, 1, 1);
+
     }
 
     public void Narration_When_MatchGame()
