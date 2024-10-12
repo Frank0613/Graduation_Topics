@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player_Movement : MonoBehaviour
 {
+    public static Player_Movement instance;
     public bool isFist_L { get; private set; } = false;
     public bool isFist_R { get; private set; } = false;
 
@@ -28,6 +29,10 @@ public class Player_Movement : MonoBehaviour
 
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.isKinematic = true;
         //When start, previous position equal to init position of both hands.
@@ -88,6 +93,33 @@ public class Player_Movement : MonoBehaviour
             playerRigidbody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
             lastForceTime = Time.time;
         }
+    }
+    public void Rotation_Player(GameObject target, float rotation)
+    {
+        StartCoroutine(SmoothRotatePlayer(target, rotation));
+    }
+
+    IEnumerator SmoothRotatePlayer(GameObject target, float rotationAngle)
+    {
+        yield return new WaitForSeconds(2);
+        GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerRotating;
+        Quaternion startRotation = target.transform.rotation;
+        Quaternion targetRotation = startRotation * Quaternion.Euler(0, rotationAngle, 0); // 基於當前旋轉，增加相對旋轉
+        float elapsedTime = 0f;
+        while (elapsedTime < 8)
+        {
+
+            target.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / 8);
+            elapsedTime += Time.deltaTime;
+            yield return null; // Continue the rotation over multiple frames
+        }
+
+        target.transform.rotation = targetRotation; // 確保最後設置為目標旋轉
+        GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerMoving;
+    }
+    public void CanMove(bool can)
+    {
+        playerRigidbody.isKinematic = !can;
     }
 
     public bool Both_Hands_Fist()

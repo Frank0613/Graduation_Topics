@@ -22,7 +22,7 @@ public class NarrationManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        Narration_Before_SprayGame();
+        //Narration_Before_SprayGame();
     }
 
     #region  Every Narrations

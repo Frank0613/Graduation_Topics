@@ -8,37 +8,70 @@ public class SprayGameManager : MonoBehaviour
 {
 
 
+    public static SprayGameManager Instance;
+
     [Header("GameObject Setting")]
     [SerializeField] private GameObject SprayBottle;
+    private Vector3 SprayBottle_Init_Pos;
     [SerializeField] private GameObject SprayBottle_UI;
+    [SerializeField] private GameObject Tutorial_UI;
 
     [Header("TestMode Setting")]
     [Tooltip("Press T")][SerializeField] private bool TestMode;
 
-
+    [SerializeField] float RotateAngle;
+    [SerializeField] private GameStateManager gameStateManager;
 
     void Start()
     {
-        Display_SprayBottle_UI(false);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        gameStateManager = GetComponent<GameStateManager>();
 
-        if (SprayBottle_UI != null)
-            SprayBottle_UI.GetComponent<Plant_Progress>().OnSprayGameOver += Handle_OnSprayGameOver;
+        SprayBottle_Init_Pos = SprayBottle.transform.position;
+
+        Display_SprayBottle_UI(false);
+        Display_SprayGameTutorial(false);
+
     }
+
     void Update()
     {
+        Show_UI_When_Pick();
         TestModeFunction();
     }
-
-    private void Handle_OnSprayGameOver(object sender, EventArgs e)
+    public void AfterSprayGame()
     {
-        GetComponent<GameFlowManager>().After_SprayGame();
-        SprayBottle_UI.GetComponent<Plant_Progress>().OnSprayGameOver -= Handle_OnSprayGameOver;
+        StartCoroutine(SprayGameEnd_Coroutine());
+    }
 
+    IEnumerator SprayGameEnd_Coroutine()
+    {
+        yield return new WaitForSeconds(1);
+        Display_SprayBottle_UI(false);
+        Display_SprayGameTutorial(false);
+        yield return new WaitForSeconds(1);
+        Player_Movement.instance.Rotation_Player(Player_Movement.instance.gameObject, RotateAngle);
+
+    }
+    private void Show_UI_When_Pick()
+    {
+        if (SprayBottle.transform.position != SprayBottle_Init_Pos && GameStateManager.Instance.game_Status == GameStateManager.Game_Status.SprayGameStart)
+        {
+            Display_SprayBottle_UI(true);
+            SprayBottle_Init_Pos = Vector3.zero;
+        }
     }
     public void Display_SprayBottle_UI(bool visible)
     {
-        SprayBottle.SetActive(visible);
+
         SprayBottle_UI.SetActive(visible);
+    }
+    public void Display_SprayGameTutorial(bool visible)
+    {
+        Tutorial_UI.SetActive(visible);
     }
 
 
