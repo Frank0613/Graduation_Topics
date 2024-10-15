@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class Water_Spray : MonoBehaviour, Oculus.Interaction.HandGrab.IHandGrabUseDelegate
 {
+    public static Water_Spray instance;
 
     [Header("Input")]
     [SerializeField] private Transform _trigger;
@@ -42,11 +43,14 @@ public class Water_Spray : MonoBehaviour, Oculus.Interaction.HandGrab.IHandGrabU
     private float _dampedUseStrength = 0;
     private float _lastUseTime;
 
+
     private Vector3 Original_Pos;
 
     #region input
     void Start()
     {
+        if (instance == null)
+            instance = this;
         Original_Pos = transform.position;
     }
     void Update()
@@ -58,17 +62,19 @@ public class Water_Spray : MonoBehaviour, Oculus.Interaction.HandGrab.IHandGrabU
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Water"))
             {
                 hitPlant = true;
+
             }
             else
             {
                 hitPlant = false;
+
             }
         }
-
-        if (transform.position != Original_Pos)
+        if (GameStateManager.Instance.game_Status == GameStateManager.Game_Status.SprayGameStart)
         {
-            plantProgress.Hide_SprayGameTutorial();
+            SprayGameManager.Instance.Display_SprayGameTutorial(!hitPlant);
         }
+
 
 
     }

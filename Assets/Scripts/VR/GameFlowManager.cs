@@ -8,6 +8,8 @@ public class GameFlowManager : MonoBehaviour
 {
 
 
+
+
     public static GameFlowManager Instance;
     [Header("Fade Screen Control")]
     [SerializeField] private Fade_Screen fadeScreen;
@@ -96,7 +98,7 @@ public class GameFlowManager : MonoBehaviour
     #region AfterSprayGames
     public void After_SprayGame()
     {
-        StartCoroutine(Route_After_SprayGame());
+        //StartCoroutine(Route_After_SprayGame());
 
     }
 
@@ -104,13 +106,13 @@ public class GameFlowManager : MonoBehaviour
     {
         // Hide_SprayBottle_UI
         yield return new WaitForSeconds(1f);
-        GetComponent<SprayGameManager>().Display_SprayBottle_UI(false);
+        //GetComponent<SprayGameManager>().Display_SprayBottle_UI(false);
         yield return new WaitForSeconds(1f);
         Player.GetComponent<Rigidbody>().isKinematic = false;
         if (RotationCoroutine == null)
         {
             RotationCoroutine = StartCoroutine(SmoothRotatePlayer(182f));
-            GetComponent<SprayGameManager>().Display_SprayBottle_UI(true);
+            //GetComponent<SprayGameManager>().Display_SprayBottle_UI(true);
         }
 
         // Start moving & narration

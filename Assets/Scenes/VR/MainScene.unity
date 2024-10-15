@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1266306333}
-  m_IndirectSpecularColor: {r: 0.48207602, g: 0.25417084, b: 0.15001571, a: 1}
+  m_IndirectSpecularColor: {r: 0.48164788, g: 0.25470915, b: 0.15100604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5424,7 +5424,7 @@ GameObject:
   - component: {fileID: 251867982}
   - component: {fileID: 251867983}
   m_Layer: 0
-  m_Name: SprayBottle
+  m_Name: SprayBottle_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11792,6 +11792,111 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588843558}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &593377525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 593377526}
+  - component: {fileID: 593377529}
+  - component: {fileID: 593377528}
+  - component: {fileID: 593377527}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &593377526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593377525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.145, y: -0.009, z: -0.08}
+  m_LocalScale: {x: 0.35, y: 0.02, z: 0.3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450652092846711}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &593377527
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593377525}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &593377528
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593377525}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &593377529
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593377525}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &624055883
 GameObject:
   m_ObjectHideFlags: 0
@@ -12023,15 +12128,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.205
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25693,7 +25798,7 @@ Transform:
   m_GameObject: {fileID: 1072988125}
   serializedVersion: 2
   m_LocalRotation: {x: -0.09561852, y: -0.025127407, z: -0.9929366, w: -0.06559457}
-  m_LocalPosition: {x: -0.193, y: -0.752, z: 920859}
+  m_LocalPosition: {x: 0.91, y: -1.41, z: 164693}
   m_LocalScale: {x: 1.1770141, y: 1.1404825, z: 0.00008079244}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27097,7 +27202,7 @@ Transform:
   m_GameObject: {fileID: 1151512041}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0, z: -0.2}
+  m_LocalPosition: {x: -0.05, y: -0.045, z: -0.161}
   m_LocalScale: {x: 1, y: 0.16855, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27145,7 +27250,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151512041}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -28251,7 +28356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1235451325
 Transform:
   m_ObjectHideFlags: 0
@@ -46089,8 +46194,8 @@ Transform:
   m_GameObject: {fileID: 1831153913}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.095, y: -0.8, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalPosition: {x: -0.097716, y: -0.85009, z: 0.0061185}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6738450968647821133}
@@ -47294,10 +47399,10 @@ GameObject:
   - component: {fileID: 1888252173}
   - component: {fileID: 1888252172}
   - component: {fileID: 1888252176}
-  - component: {fileID: 1888252178}
   - component: {fileID: 1888252174}
   - component: {fileID: 1888252177}
   - component: {fileID: 1888252175}
+  - component: {fileID: 1888252178}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47348,7 +47453,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SprayBottle: {fileID: 1999929408}
   SprayBottle_UI: {fileID: 7907354929274892855}
+  Tutorial_UI: {fileID: 4700080100702555529}
   TestMode: 0
+  RotateAngle: 180
+  gameStateManager: {fileID: 1888252178}
 --- !u!82 &1888252175
 AudioSource:
   m_ObjectHideFlags: 0
@@ -47452,7 +47560,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888252171}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 101f5bf065c3d294aa4958c8c1166313, type: 3}
   m_Name: 
@@ -47527,7 +47635,7 @@ MonoBehaviour:
         m_Calls: []
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1888252178}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameFlowManager, Assembly-CSharp
           m_MethodName: DisplayNeighbor
           m_Mode: 6
@@ -47584,7 +47692,7 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1888252178}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameFlowManager, Assembly-CSharp
           m_MethodName: NeighborMoving
           m_Mode: 1
@@ -47596,7 +47704,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 1888252178}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameFlowManager, Assembly-CSharp
           m_MethodName: DoorMoving
           m_Mode: 1
@@ -47608,7 +47716,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 1888252178}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameFlowManager, Assembly-CSharp
           m_MethodName: DisplayDaughter
           m_Mode: 6
@@ -47620,7 +47728,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-        - m_Target: {fileID: 1888252178}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameFlowManager, Assembly-CSharp
           m_MethodName: DaughterMoving
           m_Mode: 1
@@ -47782,22 +47890,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1888252171}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 500f6f74587724a4f843141f1ed94a11, type: 3}
+  m_Script: {fileID: 11500000, guid: 81c14e0abdce9bb4f9bc3e651f37eb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeScreen: {fileID: 20070206}
-  player_agent: {fileID: 919132147548326094}
-  PhotoRoute_Waypoints:
-  - {fileID: 68965185}
-  DoorRoute_Waypoints:
-  - {fileID: 1655458864}
-  - {fileID: 1244813065}
-  - {fileID: 1532323162}
-  RotationDuration: 8
-  Neighbor_OBJ: {fileID: 797137507}
-  Daughter_OBJ: {fileID: 973558674}
-  Door_OBJ: {fileID: 770184364}
-  Player: {fileID: 919132147548326093}
 --- !u!1001 &1903059923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49616,7 +49711,7 @@ Transform:
   m_GameObject: {fileID: 1999929408}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 1.5, y: 0.8, z: -2.4}
+  m_LocalPosition: {x: 1.573, y: 0.151, z: -2.017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52164,6 +52259,7 @@ Transform:
   - {fileID: 1831153914}
   - {fileID: 628426052}
   - {fileID: 1151512042}
+  - {fileID: 593377526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450652491051778
@@ -53704,7 +53800,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 3244873974193889464}
-  Tutorial: {fileID: 5231085141890661662}
   Count_Success_Dots:
   - {fileID: 3046950830253651073}
   - {fileID: 3212330071464150381}

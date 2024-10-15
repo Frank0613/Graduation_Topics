@@ -9,7 +9,7 @@ public class Plant_Progress : MonoBehaviour
 {
     [Header("UI Objects Setting")]
     [SerializeField] private Slider progressBar;
-    [SerializeField] private Image Tutorial;
+
     [SerializeField] private Image[] Count_Success_Dots;
     [SerializeField] private RectTransform Fill_Area;
 
@@ -25,9 +25,9 @@ public class Plant_Progress : MonoBehaviour
     // Game State Values
     public int Level_index { get; private set; } = 0;
     public bool In_Range { get; private set; } = false;
+    public static event EventHandler OnGameStateChange;
 
     // Game State Events       
-    public event EventHandler OnSprayGameOver;
     public event EventHandler OnEnterRange;
     public event EventHandler OnExitRange;
 
@@ -40,6 +40,8 @@ public class Plant_Progress : MonoBehaviour
     void Update()
     {
         ProgressBar_PingPong();
+        Detect_Wether_Spray_IsFinished();
+        Detect_Wether_In_Range();
     }
     #region Initialization
     private void Initialized_ProgressBar()
@@ -51,7 +53,7 @@ public class Plant_Progress : MonoBehaviour
         Total_PosX = progressBar.GetComponent<RectTransform>().rect.width;
 
         // OnValueChanged event settings 
-        progressBar.onValueChanged.AddListener(OnProgressBarValueChanged);
+        //progressBar.onValueChanged.AddListener(OnProgressBarValueChanged);
 
         // Success_Dot settings 
         for (int i = 0; i < Count_Success_Dots.Length; i++)
@@ -61,8 +63,8 @@ public class Plant_Progress : MonoBehaviour
     }
     private void OnProgressBarValueChanged(float value)
     {
-        Detect_Wether_In_Range();
-        Detect_Wether_Spray_IsFinished();
+        //Detect_Wether_In_Range();
+        //Detect_Wether_Spray_IsFinished();
     }
     #endregion
     private void ProgressBar_PingPong()
@@ -102,8 +104,10 @@ public class Plant_Progress : MonoBehaviour
         {
             // When GameOver
             Level_index = 0;
-            this.enabled = false;
-            OnSprayGameOver?.Invoke(this, EventArgs.Empty);
+            GameStateManager.Instance.game_Status = GameStateManager.Game_Status.SprayGameEnd;
+            OnGameStateChange?.Invoke(this, EventArgs.Empty);
+
+
         }
     }
     #endregion
@@ -143,14 +147,7 @@ public class Plant_Progress : MonoBehaviour
         color.a = alpha;
         Count_Success_Dots[dot_index].color = color;
     }
-    public void Show_SprayGameTutorial()
-    {
-        Tutorial.gameObject.SetActive(true);
-    }
-    public void Hide_SprayGameTutorial()
-    {
-        Tutorial.gameObject.SetActive(false);
-    }
+
     #endregion
     void OnDisable()
     {
