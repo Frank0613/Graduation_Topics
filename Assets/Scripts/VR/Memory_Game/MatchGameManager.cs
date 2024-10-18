@@ -46,8 +46,8 @@ public class MatchGameManager : MonoBehaviour
         Vague_Photo.SetActive(true);
 
         // Hide UI when start   
-        //Display_MatchGame_Tutorial(false);
-        //Display_MatchGame_UI(false);
+        Display_MatchGame_Tutorial(false);
+        Display_MatchGame_UI(false);
     }
     void Update()
     {
@@ -177,9 +177,6 @@ public class MatchGameManager : MonoBehaviour
                 Display_MatchGame_UI(false);
                 Display_MatchGame_Tutorial(false);
                 Vague_Photo.SetActive(false);
-                // after the game2 end............
-                GetComponent<GameFlowManager>().After_MatchGame();
-                GetComponent<NarrationManager>().StopNarration();
                 break;
 
         }
@@ -229,12 +226,9 @@ public class MatchGameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Y))
             {
                 ChangeGameStatus("MatchGameStart");
-                GetComponent<NarrationManager>().Narration_When_MatchGame();
             }
         }
 
-
-        //Debug.Log(state);
     }
     #endregion
 
