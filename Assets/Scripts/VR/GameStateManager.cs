@@ -41,6 +41,7 @@ public class GameStateManager : MonoBehaviour
     void Update()
     {
         Player_Status_Fun();
+        print(player_Status);
     }
     private void Handle_OnGameStateChange(object sender, EventArgs e)
     {

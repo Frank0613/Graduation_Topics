@@ -20,6 +20,7 @@ public class SprayGameManager : MonoBehaviour
     [Tooltip("Press T")][SerializeField] private bool TestMode;
 
     [SerializeField] float RotateAngle;
+    [SerializeField] float RotateDelay;
     [SerializeField] private GameStateManager gameStateManager;
 
     void Start()
@@ -52,8 +53,9 @@ public class SprayGameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         Display_SprayBottle_UI(false);
         Display_SprayGameTutorial(false);
+        SprayBottle.SetActive(false);
         yield return new WaitForSeconds(1);
-        Player_Movement.instance.Rotation_Player(Player_Movement.instance.gameObject, RotateAngle);
+        Player_Movement.instance.Rotation_Player(Player_Movement.instance.gameObject, RotateAngle, RotateDelay, true);
 
     }
     private void Show_UI_When_Pick()
@@ -66,7 +68,6 @@ public class SprayGameManager : MonoBehaviour
     }
     public void Display_SprayBottle_UI(bool visible)
     {
-
         SprayBottle_UI.SetActive(visible);
     }
     public void Display_SprayGameTutorial(bool visible)

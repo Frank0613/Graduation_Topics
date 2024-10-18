@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -34,7 +35,6 @@ public class Player_Movement : MonoBehaviour
             instance = this;
         }
         playerRigidbody = GetComponent<Rigidbody>();
-        playerRigidbody.isKinematic = true;
         //When start, previous position equal to init position of both hands.
         previousLeftHandPos = leftHand.transform.position;
         previousRightHandPos = rightHand.transform.position;
@@ -43,65 +43,23 @@ public class Player_Movement : MonoBehaviour
     void FixedUpdate()
     {
         TestModeFunction();
-        // Player_Movement_Fun();
-    }
-    void Player_Movement_Fun()
-    {
-        if (Both_Hands_Fist())
-        {
-            Hands_Velocity_Process();
-
-            // ApplyForce
-            if (smoothedLeftHandVelocity.z < -velocityThreshold && smoothedRightHandVelocity.z < -velocityThreshold)
-            {
-                ApplyForwardForce();
-                Debug.Log("Move");
-            }
-        }
-    }
-    private void Hands_Velocity_Process()
-    {
-        // Get velocity of both hands (v = dis/time)
-        Vector3 leftHandVelocity = (leftHand.transform.position - previousLeftHandPos) / Time.fixedDeltaTime;
-        Vector3 rightHandVelocity = (rightHand.transform.position - previousRightHandPos) / Time.fixedDeltaTime;
-
-        // Smooth the velocity(Reduce errors)
-        smoothedLeftHandVelocity = Vector3.Lerp(smoothedLeftHandVelocity, leftHandVelocity, smoothingFactor);
-        smoothedRightHandVelocity = Vector3.Lerp(smoothedRightHandVelocity, rightHandVelocity, smoothingFactor);
-
-        // Update previous pos of both hands.
-        previousLeftHandPos = leftHand.transform.position;
-        previousRightHandPos = rightHand.transform.position;
     }
     public void ApplyForwardForce()
     {
-
-
-        //Apply the force
-        //playerRigidbody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
-
-
-
-        // Normalized direction.
-        Vector3 averageDirection = (smoothedLeftHandVelocity + smoothedRightHandVelocity).normalized;
-        //Force direction.(expect y dir)
-        Vector3 forceDirection = -new Vector3(averageDirection.x, 0, averageDirection.z);
-
         if (Time.time - lastForceTime >= cooldownDuration)
         {
-            //Apply the force
             playerRigidbody.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
             lastForceTime = Time.time;
         }
     }
-    public void Rotation_Player(GameObject target, float rotation)
+    public void Rotation_Player(GameObject target, float rotation, float triggerDelay, bool keepMove)
     {
-        StartCoroutine(SmoothRotatePlayer(target, rotation));
+        StartCoroutine(SmoothRotatePlayer(target, rotation, triggerDelay, keepMove));
     }
 
-    IEnumerator SmoothRotatePlayer(GameObject target, float rotationAngle)
+    IEnumerator SmoothRotatePlayer(GameObject target, float rotationAngle, float triggerDelay, bool keepMove)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(triggerDelay);
         GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerRotating;
         Quaternion startRotation = target.transform.rotation;
         Quaternion targetRotation = startRotation * Quaternion.Euler(0, rotationAngle, 0); // 基於當前旋轉，增加相對旋轉
@@ -113,14 +71,36 @@ public class Player_Movement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null; // Continue the rotation over multiple frames
         }
-
+        IsKeepMoving(keepMove);
         target.transform.rotation = targetRotation; // 確保最後設置為目標旋轉
-        GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerMoving;
+    }
+    public void Stopping_Player(GameObject target, float delay, bool keepMove)
+    {
+        StartCoroutine(SmoothStoppingPlayer(target, delay, keepMove));
+    }
+    IEnumerator SmoothStoppingPlayer(GameObject target, float delay, bool keepMove)
+    {
+        yield return new WaitForSeconds(delay);
+        target.GetComponent<Player_Movement>().CanMove(false);
+        IsKeepMoving(keepMove);
+    }
+    private void IsKeepMoving(bool keepMove)
+    {
+        if (keepMove)
+        {
+            GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerMoving;
+        }
+        else
+        {
+            GameStateManager.Instance.player_Status = GameStateManager.Player_Status.PlayerInGame;
+        }
     }
     public void CanMove(bool can)
     {
+        //Debug.Log("CanMove called with: " + can);
         playerRigidbody.isKinematic = !can;
     }
+
 
     public bool Both_Hands_Fist()
     {
@@ -150,7 +130,6 @@ public class Player_Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && TestMode)
         {
-            Debug.Log("ApplyForce");
             ApplyForwardForce();
         }
     }
